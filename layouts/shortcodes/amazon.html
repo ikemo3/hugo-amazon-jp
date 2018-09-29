@@ -1,0 +1,39 @@
+{{- $category := .Get "category" -}}
+{{- if (not $category) -}}
+  {{- errorf "amazonにcategoryが未指定です。" }}
+{{- end }}
+
+{{- $key := .Get "key" -}}
+{{- if (not $key) -}}
+  {{- errorf "amazonにkeyが未指定です。" }}
+{{- end }}
+
+{{- $tag := .Site.Params.amazonJpAffiliate }}
+{{- if (not $tag) -}}
+  {{- errorf "サイトパラメータamazonJpAffiliateが未指定です。" }}
+{{- end }}
+
+{{- $book := (index (index $.Site.Data $category) $key) -}}
+{{- if (not $book) -}}
+  {{- errorf "%s.yamlに'%s'がありません。" $category $key }}
+{{- end }}
+
+{{- $title := $book.title -}}
+{{- if (not $title) -}}
+  {{- errorf "%s.yamlの'%s'にtitleがありません。" $category $key }}
+{{- end }}
+
+{{- $asin := $book.asin -}}
+{{- if (not $asin) -}}
+  {{- errorf "%s.yamlの'%s'にasinがありません。" $category $key }}
+{{- end -}}
+
+<div style="margin: 2em 0;">
+<a style="display: inline-block;" target="_blank" href="https://www.amazon.co.jp/gp/product/{{ $asin }}/?tag={{ $tag }}">
+<img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN={{ $asin }}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL160_&tag={{ $tag }}" >
+</a>
+<br>
+<a target="_blank" href="https://www.amazon.co.jp/gp/product/{{ $asin }}/?tag={{ $tag }}">
+{{ $title }}
+</a>
+</div>

@@ -1,0 +1,34 @@
+{{- $category := .Get "category" -}}
+{{- if (not $category) -}}
+  {{- errorf "amazon-linkにcategoryが未指定です。" }}
+{{- end }}
+
+{{- $key := .Get "key" -}}
+{{- if (not $key) -}}
+  {{- errorf "amazon-linkにkeyが未指定です。" }}
+{{- end }}
+
+{{- $tag := .Site.Params.amazonJpAffiliate }}
+{{- if (not $tag) -}}
+  {{- errorf "サイトパラメータamazonJpAffiliateが未指定です。" }}
+{{- end }}
+
+{{- $book := (index (index $.Site.Data $category) $key) -}}
+{{- if (not $book) -}}
+  {{- errorf "%s.yamlに'%s'がありません。" $category $key }}
+{{- end }}
+
+{{- $title := $book.title -}}
+{{- if (not $title) -}}
+  {{- errorf "%s.yamlの'%s'にtitleがありません。" $category $key }}
+{{- end }}
+
+{{- $asin := $book.asin -}}
+{{- if (not $asin) -}}
+  {{- errorf "%s.yamlの'%s'にasinがありません。" $category $key }}
+{{- end -}}
+
+<a target="_blank" href="https://www.amazon.co.jp/gp/product/{{ $asin }}/?tag={{ $tag }}">{{ $title }}</a>
+{{- $title := $book.title -}}
+{{- $asin := $book.asin -}}
+<a target="_blank" href="https://www.amazon.co.jp/gp/product/{{ $asin }}/?tag={{ $tag }}">{{ $title }}</a>
