@@ -59,4 +59,4 @@ MITライセンスです。
 
 [Data Templates]: https://gohugo.io/templates/data-templates/
 [Hugo]: https://gohugo.io/
-[Theme Components]: https://gohugo.io/themes/theme-components/
+[Theme Components]: https://gohugo.io/hugo-modules/theme-components/
